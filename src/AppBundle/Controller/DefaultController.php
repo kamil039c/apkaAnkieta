@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-require("../src/Utils/SimpleFunctions.php");
+//require("../src/Utils/SimpleFunctions.php");
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,6 +44,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, Connection $db)
     {
+		
+		return $this->render('error.html.twig', ['error' => getenv('DATABASE_URL')]);
 		$this->dbc = $db;
 		$ankietaFaza = 0;
 		$ankieta = null;
