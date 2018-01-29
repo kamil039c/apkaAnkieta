@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Driver\Connection;
-use \App\Utils\SimpleFunctions;
+//use \App\Utils\SimpleFunctions;
 use PDO;
 
 class DefaultController extends Controller
@@ -46,7 +46,7 @@ class DefaultController extends Controller
     {
 		$dbopts = parse_url(getenv('DATABASE_URL'));
 		
-		return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
+		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
 		$this->dbc = $db;
 		$ankietaFaza = 0;
 		$ankieta = null;
@@ -62,13 +62,15 @@ class DefaultController extends Controller
 			$stmt->closeCursor();
 		}
 		
-		/*$db->exec("INSERT INTO users(name,pwd) VALUES('kamil', '" . SimpleFunctions::hashPw('123456') . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('franek', '" . SimpleFunctions::hashPw('123456') . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('marian', '" . SimpleFunctions::hashPw('123456') . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('malgoska', '" . SimpleFunctions::hashPw('123456') . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('kaska', '" . SimpleFunctions::hashPw('123456') . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('mateusz', '" . SimpleFunctions::hashPw('123456') . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('adam', '" . SimpleFunctions::hashPw('123456') . "')");*/
+		/*
+		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba'])
+		$db->exec("INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')");
+		$db->exec("INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')");
+		$db->exec("INSERT INTO users(name,pwd) VALUES('marian', '" . $pwd . "')");
+		$db->exec("INSERT INTO users(name,pwd) VALUES('malgoska', '" . $pwd . "')");
+		$db->exec("INSERT INTO users(name,pwd) VALUES('kaska', '" . $pwd . "')");
+		$db->exec("INSERT INTO users(name,pwd) VALUES('mateusz', '" . $pwd . "')");
+		$db->exec("INSERT INTO users(name,pwd) VALUES('adam', '" . $pwd . "')");*/
 		
         return $this->render(
 			'default/index.html.twig', 
@@ -101,7 +103,7 @@ class DefaultController extends Controller
 			);
 		}
 		
-		if (!SimpleFunctions::checkPw($request->request->get('pwd'), $row['pwd'])) {
+		if (!password_verify($request->request->get('pwd'), $row['pwd'])) {
 			return $this->render('error.html.twig', ['error' => 'Autentykacja nie powiodła się!']);
 		}
 		

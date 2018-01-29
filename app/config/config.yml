@@ -39,12 +39,12 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver: pdo_mysql
-        host: 'localhost'
-        port: '3306'
-        dbname: 'apka_db'
-        user: '_gameUserNormal_1287'
-        password: 'EOxMNxV7AGeaJo4v'
+        driver: pgsql
+        host: 'ec2-54-235-240-126.compute-1.amazonaws.com'
+        port: '5432'
+        dbname: 'd3n70l4g33rpd1'
+        user: 'htgmkgmgcmbzta'
+        password: '154eef22a077b38453d86f51a220d515374d4defe31e2bcd6c71e720671abbaa'
         charset: UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
