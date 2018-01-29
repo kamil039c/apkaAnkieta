@@ -62,30 +62,37 @@ class DefaultController extends Controller
 			$stmt->closeCursor();
 		}
 		
+		$queries = [
+			"CREATE TABLE `ankiety` (
+				`id` int(11) NOT NULL,
+				`uid` int(11) NOT NULL,
+				`imie` varchar(50) NOT NULL,
+				`nazwisko` varchar(50) NOT NULL,
+				`wiek` int(11) NOT NULL
+			) ENGINE=InnoDB DEFAULT CHARSET=utf-8",
+			"CREATE TABLE `ankiety` (
+				`id` int(11) NOT NULL,
+				`uid` int(11) NOT NULL,
+				`imie` varchar(50) NOT NULL,
+				`nazwisko` varchar(50) NOT NULL,
+				`wiek` int(11) NOT NULL
+			) ENGINE=InnoDB DEFAULT CHARSET=utf-8",
+			"INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')",
+			"INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')",
+			"INSERT INTO users(name,pwd) VALUES('marian', '" . $pwd . "')",
+			"INSERT INTO users(name,pwd) VALUES('malgoska', '" . $pwd . "')",
+			"INSERT INTO users(name,pwd) VALUES('kaska', '" . $pwd . "')",
+			"INSERT INTO users(name,pwd) VALUES('mateusz', '" . $pwd . "')",
+			"INSERT INTO users(name,pwd) VALUES('adam', '" . $pwd . "')"
+		];
 		
-		$db->exec("CREATE TABLE `ankiety` (
-			  `id` int(11) NOT NULL,
-			  `uid` int(11) NOT NULL,
-			  `imie` varchar(50) NOT NULL,
-			  `nazwisko` varchar(50) NOT NULL,
-			  `wiek` int(11) NOT NULL
-			) ENGINE=InnoDB DEFAULT CHARSET=utf-8");
-			
-			$db->exec("CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `pwd` varchar(60) NOT NULL,
-  `session_token` varchar(8) NOT NULL DEFAULT 'abcd7654'
-) ENGINE=InnoDB DEFAULT  CHARSET=utf-8");
-		
-		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba']);
-		$db->exec("INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('marian', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('malgoska', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('kaska', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('mateusz', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('adam', '" . $pwd . "')");
+		foreach ($queries as $query) {
+			try {
+				$db->exec($query);
+			} catch (PDOException $Exception) {
+				return $this->render('error.html.twig', ['error' =>  $Exception->getMessage( ) ]);
+			}
+		}
 		
         return $this->render(
 			'default/index.html.twig', 
