@@ -42,12 +42,13 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver: pdo_mysql
-        host: '9298bdde-3be9-470c-a64a-b608e625f12a.apkaankieta-4935.mysql.dbs.scalingo.com'
-        port: '31528'
-        dbname: 'apkaankieta_4935'
-        user: 'apkaankieta_4935'
-        password: '4LklrYGdMIbxdv-XNx3Y'
+        driver: pdo_sqlite
+        host: ''
+        port: ''
+        dbname: 'db.sqlite'
+        path: 'db.sqlite'
+        user: ''
+        password: ''
         charset: UTF8
         #requireSSL: true
         #verifyServerCertificate: false

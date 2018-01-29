@@ -44,25 +44,31 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, Connection $db)
     {
-		$dbopts = parse_url('mysql://<user>:<password>@9298bdde-3be9-470c-a64a-b608e625f12a.apkaankieta-4935.mysql.dbs.scalingo.com:31528/apkaankieta_4935?useSSL=true&verifyServerCertificate=false');
+		//$dbopts = parse_url('mysql://<user>:<password>@9298bdde-3be9-470c-a64a-b608e625f12a.apkaankieta-4935.mysql.dbs.scalingo.com:31528/apkaankieta_4935?useSSL=true&verifyServerCertificate=false');
 		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
 		
+		
+		//Struktura tabel i dane testowe:
+		
+		/*
 		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba']);
+		
 		$queries = [
-			"CREATE TABLE `ankiety` (
-				`id` int(11) NOT NULL,
-				`uid` int(11) NOT NULL,
+			"CREATE TABLE IF NOT EXISTS `ankiety` (
+				`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+				`uid` INTEGER NOT NULL,
 				`imie` varchar(50) NOT NULL,
 				`nazwisko` varchar(50) NOT NULL,
-				`wiek` int(11) NOT NULL
-			) ENGINE=InnoDB DEFAULT CHARSET=utf-8",
-			"CREATE TABLE `ankiety` (
-				`id` int(11) NOT NULL,
-				`uid` int(11) NOT NULL,
-				`imie` varchar(50) NOT NULL,
-				`nazwisko` varchar(50) NOT NULL,
-				`wiek` int(11) NOT NULL
-			) ENGINE=InnoDB DEFAULT CHARSET=utf-8",
+				`wiek` INTEGER NOT NULL
+			)",
+			"ALTER TABLE `ankiety` ADD KEY `uid`",
+			"CREATE TABLE IF NOT EXISTS `users` (
+				`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+				`name` varchar(50) NOT NULL,
+				`pwd` varchar(60) NOT NULL,
+				`session_token` varchar(8) NOT NULL DEFAULT 'abcd7654'
+			)",
+			"ALTER TABLE `users` ADD KEY `name`",
 			"INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')",
 			"INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')",
 			"INSERT INTO users(name,pwd) VALUES('marian', '" . $pwd . "')",
@@ -72,17 +78,33 @@ class DefaultController extends Controller
 			"INSERT INTO users(name,pwd) VALUES('adam', '" . $pwd . "')"
 		];
 		
+		//Generownie ankiet testowych:
+		
+		$imiona = ["mariusz","mateusz","franio","bogusław","mietek","wiesio","łukasz","sebastian"];
+		$nazwiska = ["kowalski","nowak","cieplak","marczuk","kowalik","niegłowski","ćwierkacz"];
+		
+		for ($i = 0; $i < 50; $i++) {
+			$queries[] = "INSERT INTO ankiety(uid,imie,nazwisko,wiek) VALUES("
+				.mt_rand(1,7).",'".$imiona[mt_rand(0, count($imiona) - 1)]."','".$nazwiska[mt_rand(0, count($nazwiska) - 1)]."',".mt_rand(17,66).")";
+		}
+		
+		//Wykonanie zapytań z tranzakcją:
+		$db->beginTransaction();
+		$commit = true;
+		
 		foreach ($queries as $query) {
 			try {
 				$db->exec($query);
 			} catch (Exception $Exception) {
-				return $this->render('error.html.twig', ['error' =>  $Exception->getMessage( ) ]);
+				$db->rollBack();
+				$this->render('error.html.twig', ['error' => $Exception->getMessage( )]);
 			}
 		}
 		
-		return $this->render('error.html.twig', ['error' =>  'tu jestem' ]);
-		
-		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
+		$db->commit();
+		unset($queries);
+		*/
+
 		$this->dbc = $db;
 		$ankietaFaza = 0;
 		$ankieta = null;

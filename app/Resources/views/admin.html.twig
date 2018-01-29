@@ -32,7 +32,7 @@
 			
 			<div class="row">
 				{% for i in range(0, strony) %}
-					<button style="margin: 3px;" type="button" class="btn{% if i != strona %} btn-primary{% endif %}" onclick="window.location.replace('/admin/?sortby={{sortby}}&page={{i}}');">{{i}}</button>
+					<button style="margin: 3px;" type="button" class="btn{% if i != strona %} btn-primary{% endif %}" onclick="window.location.replace('/admin/?sortby={{sortby}}&page={{i}}');">{{i + 1}}</button>
 				{% endfor %}
 			</div>
 			
