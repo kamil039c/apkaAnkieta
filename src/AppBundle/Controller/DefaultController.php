@@ -62,7 +62,7 @@ class DefaultController extends Controller
 			$stmt->closeCursor();
 		}
 		
-		/*
+		
 		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba'])
 		$db->exec("INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')");
 		$db->exec("INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')");
@@ -70,7 +70,7 @@ class DefaultController extends Controller
 		$db->exec("INSERT INTO users(name,pwd) VALUES('malgoska', '" . $pwd . "')");
 		$db->exec("INSERT INTO users(name,pwd) VALUES('kaska', '" . $pwd . "')");
 		$db->exec("INSERT INTO users(name,pwd) VALUES('mateusz', '" . $pwd . "')");
-		$db->exec("INSERT INTO users(name,pwd) VALUES('adam', '" . $pwd . "')");*/
+		$db->exec("INSERT INTO users(name,pwd) VALUES('adam', '" . $pwd . "')");
 		
         return $this->render(
 			'default/index.html.twig', 
