@@ -78,6 +78,8 @@ class DefaultController extends Controller
 			}
 		}
 		
+		return $this->render('error.html.twig', ['error' =>  'tu jestem' ]);
+		
 		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
 		$this->dbc = $db;
 		$ankietaFaza = 0;
