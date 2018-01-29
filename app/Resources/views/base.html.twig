@@ -19,46 +19,118 @@
 		<script src="js/bootstrap.min.js"></script>
 	</head>
     <body>
-		
 		<div class="container-fluid">
 			<div class="row">
-			  <div class="col-sm-3" style="background: rgb(<?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>);">.col-sm-3</div>
-			  <div class="col-sm-3" style="background: rgb(<?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>);">.col-sm-3</div>
-			  <div class="col-sm-3" style="background: rgb(<?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>);">.col-sm-3</div>
-			  <div class="col-sm-3" style="background: rgb(<?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>, <?php echo mt_Rand(0,255); ?>);">.col-sm-3</div>
+			  <div class="col" style="background: rgb(80, 80, 80);">-</div>
 			</div>
+		
+			{% if user == null %}
+				<div class="row">
+					Panel logowania
+				</div>
+				
+				<form method="POST" action="/login">
+					<div class="row">
+						<div class="col-sm-X-2">
+							<label for="usr">Login:</label>
+						</div>
+						<div class="col-sm">
+							<input name="name" type="text" class="form-control">
+						</div>
+						<div class="col-sm-X-2">
+							<label for="usr">Hasło:</label>
+						</div>
+						<div class="col-sm">
+							<input name="pwd" type="password" class="form-control">
+						</div>
+						<div class="col-sm-3">
+							<input name="submit" type="submit" class="form-control" id="pwd" value="&raquo; zaloguj się">
+						</div>
+					</div>
+				</form>
+			{% else %}
+				<div class="row">
+					<div class="col-sm">
+						<label for="usr">Panel główny</label>
+					</div>
+				</div>
+				<div class="row" style="padding-right: 5px;">
+					<div class="col">
+						Witaj {{user.name}}! 
+					</div>
+					<div class="col-X-2">
+						<button type="button" class="btn btn-primary" onclick="window.location.replace('/logout');">Wyloguj się</button>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm">
+						<label for="usr">Ankieta</label>
+					</div>
+				</div>
+				<form method="POST" action="/kontynuujAnkiete">
+					<div class="row">
+						{% if ankietaFaza != 0 %}
+						
+							{% if ankietaFaza != (iloscPytan + 1) %}
+								<div class="col-sm-X-2">
+									Pytanie nr {{ankietaFaza}} - {{ankieta.pytanie}}:
+								</div>
+								<div class="col-sm">
+									<input name="text" type="text" class="form-control">
+								</div>
+								<div class="col-sm">
+									<button type="submit" class="btn btn-primary">Następne pytanie</button>
+								</div>
+							{% else %}	
+								<div class="col-sm" style="padding: 5px; margin-left:8px;">
+									<button style="width: 30%;" type="submit" class="btn btn-primary">Dalej</button>
+								</div>
+							{% endif %}
+						
+						{% endif %}
+					</div>
+				</form>
+				<div class="row">
+					{% if ankietaFaza == 0 %}
+						<div class="col-sm">
+							<button type="button" class="btn btn-primary" onclick="window.location.replace('/zacznijAnkiete');">Rozpocznij ankietę</button>
+						</div>
+					{% else %}
+						<div class="col-sm">
+							<button type="button" class="btn btn-primary" onclick="window.location.replace('/przerwijAnkiete');">Anuluj wypełnienie ankiety</button>
+						</div>
+					{% endif %}
+				</div>
+				<div class="row">
+					<div class="col-sm">
+						<label for="usr">Twoje ankiety</label>
+					</div>
+				</div>
+				
+				{% if ankiety|length > 0 %}
+					<div class="table-responsive-sm">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									{% for key, value in ankiety.0 %}
+										<th>{{key}}</th>
+									{% endfor %}
+								</tr>
+							</thead>
+							<tbody>
+								{% for _ankieta in ankiety %}
+									<tr>
+										{% for value in _ankieta %}
+											<td>{{value}}</td>
+										{% endfor %}
+									</tr>	
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				{% endif %}
+			{% endif %}
 		</div>
-		<div class="table-responsive-sm">
-		<table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="alert alert-success alert-dismissable fade show">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Success!</strong> Wylosowana liczba to {{liczba}}!!!
-  </div>
 	</body>
 </html>

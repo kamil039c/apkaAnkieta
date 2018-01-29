@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<title>Ankiety</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Style-Type" content="text/css">
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="/js/jquery.min.js"></script>
+
+		<!-- Popper JS -->
+		<script src="/js/popper.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="/js/bootstrap.min.js"></script>
+	</head>
+    <body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col" style="background: rgb(80, 80, 80);">-</div>
+			</div>
+			<div class="row">
+				Panel administracyjny, {{iloscAnkiet}} ankiet
+			</div>
+			<div class="row">
+				Kliknięcie na kolumnę sortuje po danym polu
+			</div>
+			
+			<div class="row">
+				{% for i in range(0, strony) %}
+					<button style="margin: 3px;" type="button" class="btn{% if i != strona %} btn-primary{% endif %}" onclick="window.location.replace('/admin/?sortby={{sortby}}&page={{i}}');">{{i}}</button>
+				{% endfor %}
+			</div>
+			
+			{% if ankiety|length > 0 %}
+				<div class="table-responsive-sm">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								{% for key, value in ankiety.0 %}
+									<th><span title="kliknij aby posortować" style="cursor: pointer;" onclick="window.location.replace('/admin/?sortby={{key}}&page={{strona}}');">
+										{{key}}
+										{% if key == sortby %}
+											[sort rosnący]
+										{% endif %}
+									</span></th>
+								{% endfor %}
+							</tr>
+						</thead>
+						<tbody>
+							{% for _ankieta in ankiety %}
+								<tr>
+									{% for value in _ankieta %}
+										<td>{{value}}</td>
+									{% endfor %}
+								</tr>	
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endif %}
+		</div>
+	</body>
+</html>
