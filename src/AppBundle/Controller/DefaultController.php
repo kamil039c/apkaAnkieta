@@ -46,22 +46,6 @@ class DefaultController extends Controller
     {
 		$dbopts = parse_url(getenv('DATABASE_URL'));
 		
-		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
-		$this->dbc = $db;
-		$ankietaFaza = 0;
-		$ankieta = null;
-		$ankiety = [];
-		
-		if (($zalogowanyUser = $this->getUser()) != null) {
-			$ankietaFaza = (int)$_SESSION['ankietaFaza'];
-			if (isset($this->ankietaPytania[$ankietaFaza - 1])) $ankieta = $this->ankietaPytania[$ankietaFaza - 1];
-			
-			$stmt = $db->prepare("SELECT * FROM ankiety WHERE uid = ?");
-			$stmt->execute([$zalogowanyUser['id']]);
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) $ankiety[] = $row;
-			$stmt->closeCursor();
-		}
-		
 		$queries = [
 			"CREATE TABLE `ankiety` (
 				`id` int(11) NOT NULL,
@@ -92,6 +76,22 @@ class DefaultController extends Controller
 			} catch (PDOException $Exception) {
 				return $this->render('error.html.twig', ['error' =>  $Exception->getMessage( ) ]);
 			}
+		}
+		
+		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
+		$this->dbc = $db;
+		$ankietaFaza = 0;
+		$ankieta = null;
+		$ankiety = [];
+		
+		if (($zalogowanyUser = $this->getUser()) != null) {
+			$ankietaFaza = (int)$_SESSION['ankietaFaza'];
+			if (isset($this->ankietaPytania[$ankietaFaza - 1])) $ankieta = $this->ankietaPytania[$ankietaFaza - 1];
+			
+			$stmt = $db->prepare("SELECT * FROM ankiety WHERE uid = ?");
+			$stmt->execute([$zalogowanyUser['id']]);
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) $ankiety[] = $row;
+			$stmt->closeCursor();
 		}
 		
         return $this->render(
