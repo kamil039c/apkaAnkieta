@@ -63,7 +63,7 @@ class DefaultController extends Controller
 		}
 		
 		
-		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba'])
+		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba']);
 		$db->exec("INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')");
 		$db->exec("INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')");
 		$db->exec("INSERT INTO users(name,pwd) VALUES('marian', '" . $pwd . "')");
