@@ -44,8 +44,9 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, Connection $db)
     {
+		$dbopts = parse_url(getenv('DATABASE_URL'));
 		
-		return $this->render('error.html.twig', ['error' => getenv('DATABASE_URL')]);
+		return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
 		$this->dbc = $db;
 		$ankietaFaza = 0;
 		$ankieta = null;
