@@ -39,7 +39,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver: pgsql
+        driver: pdo_pgsql
         host: 'ec2-54-235-240-126.compute-1.amazonaws.com'
         port: '5432'
         dbname: 'd3n70l4g33rpd1'
