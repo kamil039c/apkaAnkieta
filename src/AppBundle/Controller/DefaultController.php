@@ -63,6 +63,21 @@ class DefaultController extends Controller
 		}
 		
 		
+		$db->exec("CREATE TABLE `ankiety` (
+			  `id` int(11) NOT NULL,
+			  `uid` int(11) NOT NULL,
+			  `imie` varchar(50) NOT NULL,
+			  `nazwisko` varchar(50) NOT NULL,
+			  `wiek` int(11) NOT NULL
+			) ENGINE=InnoDB DEFAULT CHARSET=utf-8");
+			
+			$db->exec("CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `pwd` varchar(60) NOT NULL,
+  `session_token` varchar(8) NOT NULL DEFAULT 'abcd7654'
+) ENGINE=InnoDB DEFAULT  CHARSET=utf-8");
+		
 		$pwd = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 6, 'salt' => '65432Test_Salt12354cba']);
 		$db->exec("INSERT INTO users(name,pwd) VALUES('kamil', '" . $pwd . "')");
 		$db->exec("INSERT INTO users(name,pwd) VALUES('franek', '" . $pwd . "')");
