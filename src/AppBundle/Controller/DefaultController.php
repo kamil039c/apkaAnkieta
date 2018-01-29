@@ -45,7 +45,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request, Connection $db)
     {
 		$dbopts = parse_url('mysql://<user>:<password>@9298bdde-3be9-470c-a64a-b608e625f12a.apkaankieta-4935.mysql.dbs.scalingo.com:31528/apkaankieta_4935?useSSL=true&verifyServerCertificate=false');
-		//return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
+		return $this->render('error.html.twig', ['error' => print_r($dbopts, true)]);
 		
 		$queries = [
 			"CREATE TABLE `ankiety` (
@@ -74,7 +74,7 @@ class DefaultController extends Controller
 		foreach ($queries as $query) {
 			try {
 				$db->exec($query);
-			} catch (PDOException $Exception) {
+			} catch (Exception $Exception) {
 				return $this->render('error.html.twig', ['error' =>  $Exception->getMessage( ) ]);
 			}
 		}
