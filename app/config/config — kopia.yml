@@ -36,18 +36,15 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 
-    
-
-    
 # Doctrine Configuration
 doctrine:
     dbal:
         driver: pdo_pgsql
-        host: '9298bdde-3be9-470c-a64a-b608e625f12a.apkaankieta-4935.mysql.dbs.scalingo.com'
-        port: '31528'
-        dbname: 'apkaankieta_4935'
-        user: '<user>'
-        password: '<password>'
+        host: 'ec2-54-235-240-126.compute-1.amazonaws.com'
+        port: '5432'
+        dbname: 'd3n70l4g33rpd1'
+        user: 'htgmkgmgcmbzta'
+        password: '154eef22a077b38453d86f51a220d515374d4defe31e2bcd6c71e720671abbaa'
         charset: UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
