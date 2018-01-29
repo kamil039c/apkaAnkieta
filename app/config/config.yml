@@ -49,6 +49,9 @@ doctrine:
         user: 'apkaankieta_4935'
         password: '4LklrYGdMIbxdv-XNx3Y'
         charset: UTF8
+        requireSSL: true
+        verifyServerCertificate: false
+        
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
